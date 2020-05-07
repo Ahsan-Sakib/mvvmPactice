@@ -2,6 +2,8 @@ package com.example.mvvmtest.ui.auth
 
 import android.view.View
 import androidx.lifecycle.ViewModel
+import com.example.mvvmtest.data.repository.UserRepository
+import com.example.mvvmtest.utils.Coroutines
 
 /**
  * Created by Ahsanul Kabir on 5/5/20
@@ -18,9 +20,17 @@ class AuthViewModel: ViewModel(){
         authlistner?.onStarted()
         if (email.isNullOrEmpty() || password.isNullOrEmpty()){
             authlistner?.onFailure("Password field are empty")
+            return
         }
-        else{
-            authlistner?.onSuccess()
+        Coroutines.main{
+            val response = UserRepository().userLogin(email!!, password!!)
+            if (response.isSuccessful){
+                authlistner?.onSuccess(response.body()?.user!!)
+            }
+            else{
+                authlistner?.onFailure(response.message())
+            }
         }
+
     }
 }
