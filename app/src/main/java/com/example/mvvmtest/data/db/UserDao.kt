@@ -18,7 +18,7 @@ import com.example.mvvmtest.data.db.entity.User
 interface UserDao {
     //for insert or replace value to table
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun upInsert(user: User): Long
+    suspend fun upInsert(user: User): Long
 
     //return user
     @Query(value = "SELECT * FROM User WHERE uId = $CURRENT_USER_ID")

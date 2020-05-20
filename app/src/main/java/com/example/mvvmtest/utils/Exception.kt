@@ -8,3 +8,5 @@ import java.io.IOException
  * ahsanul.kabir@bjitgroup.com
  */
 class ApiException(message : String): IOException(message)
+
+class NoInternetException(message: String): IOException(message)
